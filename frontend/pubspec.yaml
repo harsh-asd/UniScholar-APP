@@ -19,6 +19,9 @@ dependencies:
   # State Management
   flutter_riverpod: ^2.4.9
   
+  # Secure Storage
+  flutter_secure_storage: ^9.0.0
+  
   # Navigation
   go_router: ^12.1.1
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
+import '../providers/auth_provider.dart';
 
 // Simple provider for step management (Step 1: EKYC, Step 2: Face Auth)
 final currentStepProvider = StateProvider<int>((ref) => 1);
@@ -180,6 +181,12 @@ class OtrRegistrationScreen extends ConsumerWidget {
       
       if (response.statusCode == 201) {
         final otrId = response.data['otrId'];
+        final token = response.data['token'];
+        final fullName = response.data['user']['fullName'];
+        
+        // Save to secure storage via AuthNotifier
+        await ref.read(authProvider.notifier).login(token, otrId, fullName);
+
         _showSuccess(context, 'Registration Successful! OTR ID: $otrId');
         // Handle navigation to dashboard here using go_router
       }
