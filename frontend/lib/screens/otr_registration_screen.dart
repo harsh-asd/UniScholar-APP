@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:dio/dio.dart';
 import '../providers/auth_provider.dart';
 
@@ -13,9 +14,8 @@ class OtrRegistrationScreen extends ConsumerWidget {
   OtrRegistrationScreen({Key? key}) : super(key: key);
 
   final TextEditingController _kycController = TextEditingController();
-  // Ensure the baseUrl points to your running Node.js backend. 
-  // Use 10.0.2.2 for Android emulator testing against localhost.
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:3000/api/otr'));
+  // Use physical LAN IP for APK device testing
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://10.79.144.44:3000/api/otr'));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -187,11 +187,75 @@ class OtrRegistrationScreen extends ConsumerWidget {
         // Save to secure storage via AuthNotifier
         await ref.read(authProvider.notifier).login(token, otrId, fullName);
 
-        _showSuccess(context, 'Registration Successful! OTR ID: $otrId');
-        // Handle navigation to dashboard here using go_router
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Row(
+                  children: [
+                    Icon(Icons.check_circle, color: Colors.green),
+                    SizedBox(width: 12),
+                    Text('Registration Successful!'),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Your One-Time Registration (OTR) ID has been generated successfully. Please save it for future logins:'),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.blue.shade200),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            otrId,
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.copy, color: Colors.blue),
+                            tooltip: 'Copy to Clipboard',
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(text: otrId));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('OTR ID copied to clipboard!')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close dialog
+                      context.go('/dashboard');    // Navigate
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade700,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Continue to Dashboard'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     } on DioException catch (e) {
-      _showError(context, e.response?.data['error'] ?? 'Verification Failed');
+      if (context.mounted) {
+        _showError(context, e.response?.data['error'] ?? 'Verification Failed');
+      }
     } finally {
       ref.read(isLoadingProvider.notifier).state = false;
     }

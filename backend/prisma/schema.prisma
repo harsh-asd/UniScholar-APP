@@ -4,13 +4,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model UserOTR {
   id              String           @id @default(uuid())
-  otrId           String           @unique @db.VarChar(14)
+  otrId           String           @unique
   maskedKycId     String
   fullName        String
   dob             DateTime
@@ -22,16 +22,10 @@ model UserOTR {
   applications    ScholarshipApplication[]
 }
 
-enum DocumentType {
-  INCOME_CERT
-  CASTE_CERT
-  ACADEMIC_MARK_SHEET
-}
-
 model DocumentWallet {
   id            String       @id @default(uuid())
   otrId         String
-  documentType  DocumentType
+  documentType  String
   digilockerUri String
   isVerified    Boolean      @default(true)
   fetchedAt     DateTime     @default(now())
@@ -41,21 +35,11 @@ model DocumentWallet {
   @@unique([otrId, documentType])
 }
 
-enum ApplicationStatus {
-  SUBMITTED
-  L1_APPROVED
-  L1_REJECTED
-  L2_APPROVED
-  L2_REJECTED
-  SANCTIONED
-  DISBURSED
-}
-
 model ScholarshipApplication {
   id            String            @id @default(uuid())
   otrId         String
   schemeName    String
-  status        ApplicationStatus @default(SUBMITTED)
+  status        String            @default("SUBMITTED")
   l1Remarks     String?
   l2Remarks     String?
   appliedAt     DateTime          @default(now())
@@ -63,17 +47,11 @@ model ScholarshipApplication {
   user          UserOTR           @relation(fields: [otrId], references: [otrId], onDelete: Cascade)
 }
 
-enum AdminRole {
-  L1_INSTITUTE
-  L2_DISTRICT
-  MOTA_ADMIN
-}
-
 model AdminUser {
   id                      String    @id @default(uuid())
   email                   String    @unique
   passwordHash            String
-  role                    AdminRole
+  role                    String
   assignedInstitutionCode String?   // Nullable for MOTA_ADMIN
   createdAt               DateTime  @default(now())
 }

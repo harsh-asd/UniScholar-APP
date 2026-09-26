@@ -101,7 +101,35 @@ const verifyApplication = async (req, res) => {
   }
 };
 
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    
+    // For Hackathon, hardcode the verification so we don't need a DB seed for admins
+    // Real app would fetch from prisma.adminUser
+    let role;
+    if (email === 'institute@mota.gov.in' && password === 'Admin@123') role = 'L1_INSTITUTE';
+    else if (email === 'district@mota.gov.in' && password === 'Admin@123') role = 'L2_DISTRICT';
+    else return res.status(401).json({ error: 'Invalid credentials' });
+
+    const token = jwt.sign(
+      { adminId: email, role, email },
+      process.env.JWT_SECRET || 'fallback_secret',
+      { expiresIn: '2h' }
+    );
+    
+    return res.status(200).json({ success: true, token, role, fullName: email.split('@')[0].toUpperCase() });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   getPendingApplications,
-  verifyApplication
+  verifyApplication,
+  login
 };

@@ -105,24 +105,32 @@ class AdminLoginScreen extends ConsumerWidget {
     if (email.isEmpty || password.isEmpty) return;
 
     ref.read(isLoadingProvider.notifier).state = true;
+    final apiClient = ref.read(apiClientProvider);
     
     try {
-      // Mocking Admin Login Response (since we didn't build the auth endpoint for admin yet)
-      await Future.delayed(const Duration(seconds: 1));
+      // Calling the real JWT Node.js backend we built
+      final response = await apiClient.post('/admin/login', data: {
+        'email': email,
+        'password': password
+      });
       
-      final mockToken = "mock_admin_jwt_token";
-      final mockRole = email.contains('district') ? 'L2_DISTRICT' : 'L1_INSTITUTE';
+      if (response.statusCode == 200 && response.data['success']) {
+        final token = response.data['token'];
+        final role = response.data['role'];
+        final fullName = response.data['fullName'];
+        
+        await ref.read(authProvider.notifier).login(token, "ADMIN", fullName);
 
-      // Save token to secure storage using a new method or existing authNotifier
-      await ref.read(authProvider.notifier).login(mockToken, "ADMIN_ID", "Admin User");
-
-      if (context.mounted) {
-        context.go('/admin-dashboard');
+        if (context.mounted) {
+          context.go('/admin-dashboard');
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Login failed'), backgroundColor: Colors.red),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid Credentials'), backgroundColor: Colors.red),
+        );
+      }
     } finally {
       ref.read(isLoadingProvider.notifier).state = false;
     }

@@ -1,16 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_client.dart';
 
-// Provider for Flutter Secure Storage
-final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
-  return const FlutterSecureStorage();
+// Provider for SharedPreferences instance (async)
+final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async {
+  return await SharedPreferences.getInstance();
 });
 
 // Provider for API Client
 final apiClientProvider = Provider<ApiClient>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return ApiClient(secureStorage: secureStorage);
+  // We will pass the SharedPreferences instance directly if needed, 
+  // but ApiClient can also fetch it asynchronously.
+  return ApiClient();
 });
 
 // Auth State Class
@@ -32,16 +33,15 @@ class AuthState {
 
 // Auth State Notifier
 class AuthNotifier extends StateNotifier<AuthState> {
-  final FlutterSecureStorage secureStorage;
-
-  AuthNotifier(this.secureStorage) : super(AuthState()) {
+  AuthNotifier() : super(AuthState()) {
     _checkAuthStatus();
   }
 
   Future<void> _checkAuthStatus() async {
-    final token = await secureStorage.read(key: 'jwt_token');
-    final otrId = await secureStorage.read(key: 'otr_id');
-    final fullName = await secureStorage.read(key: 'full_name');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+    final otrId = prefs.getString('otr_id');
+    final fullName = prefs.getString('full_name');
     
     if (token != null && otrId != null) {
       state = state.copyWith(
@@ -53,9 +53,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> login(String token, String otrId, String fullName) async {
-    await secureStorage.write(key: 'jwt_token', value: token);
-    await secureStorage.write(key: 'otr_id', value: otrId);
-    await secureStorage.write(key: 'full_name', value: fullName);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('jwt_token', token);
+    await prefs.setString('otr_id', otrId);
+    await prefs.setString('full_name', fullName);
     
     state = state.copyWith(
       isAuthenticated: true,
@@ -65,13 +66,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> logout() async {
-    await secureStorage.deleteAll();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
     state = AuthState(isAuthenticated: false);
   }
 }
 
 // Auth Provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return AuthNotifier(secureStorage);
+  return AuthNotifier();
 });
