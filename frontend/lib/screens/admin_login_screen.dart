@@ -105,31 +105,31 @@ class AdminLoginScreen extends ConsumerWidget {
     if (email.isEmpty || password.isEmpty) return;
 
     ref.read(isLoadingProvider.notifier).state = true;
-    final apiClient = ref.read(apiClientProvider);
-    
-    try {
-      // Calling the real JWT Node.js backend we built
-      final response = await apiClient.post('/admin/login', data: {
-        'email': email,
-        'password': password
-      });
-      
-      if (response.statusCode == 200 && response.data['success']) {
-        final token = response.data['token'];
-        final role = response.data['role'];
-        final fullName = response.data['fullName'];
-        
-        await ref.read(authProvider.notifier).login(token, "ADMIN", fullName);
 
+    try {
+      // Simulate network delay for realism
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Hardcoded secure credentials for hackathon demo
+      // (works fully offline / on Vercel without a backend)
+      final validCredentials = {
+        'institute@mota.gov.in': {'password': 'Admin@123', 'role': 'L1_INSTITUTE', 'fullName': 'Institute Nodal Officer'},
+        'district@mota.gov.in': {'password': 'Admin@123', 'role': 'L2_DISTRICT', 'fullName': 'District Nodal Officer'},
+      };
+
+      if (validCredentials.containsKey(email) &&
+          validCredentials[email]!['password'] == password) {
+        final fullName = validCredentials[email]!['fullName']!;
+        await ref.read(authProvider.notifier).login('mock_jwt_token', 'ADMIN', fullName);
         if (context.mounted) {
           context.go('/admin-dashboard');
         }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid Credentials'), backgroundColor: Colors.red),
-        );
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid Credentials'), backgroundColor: Colors.red),
+          );
+        }
       }
     } finally {
       ref.read(isLoadingProvider.notifier).state = false;
