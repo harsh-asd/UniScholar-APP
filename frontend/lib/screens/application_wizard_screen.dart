@@ -209,7 +209,7 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 Icon(Icons.sync, color: Theme.of(context).colorScheme.secondary),
                 SizedBox(width: 8),
@@ -320,4 +320,5 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
     );
   }
 }
+
 

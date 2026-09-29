@@ -104,7 +104,7 @@ class OtrRegistrationScreen extends ConsumerWidget {
                   ),
                   child: Column(
                     children: [
-                      const Icon(Icons.face_retouching_natural, size: 64, color: Theme.of(context).colorScheme.secondary),
+                      Icon(Icons.face_retouching_natural, size: 64, color: theme.colorScheme.secondary),
                       const SizedBox(height: 16),
                       Text(
                         'Ref: ${ref.watch(referenceNumberProvider)}',
@@ -220,7 +220,7 @@ class OtrRegistrationScreen extends ConsumerWidget {
                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.copy, color: Theme.of(context).colorScheme.secondary),
+                            icon: Icon(Icons.copy, color: theme.colorScheme.secondary),
                             tooltip: 'Copy to Clipboard',
                             onPressed: () {
                               Clipboard.setData(ClipboardData(text: otrId));
@@ -273,4 +273,5 @@ class OtrRegistrationScreen extends ConsumerWidget {
     );
   }
 }
+
 

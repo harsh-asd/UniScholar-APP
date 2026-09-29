@@ -35,7 +35,7 @@ class AdminLoginScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.admin_panel_settings, size: 64, color: Theme.of(context).colorScheme.primary),
+              Icon(Icons.admin_panel_settings, size: 64, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 16),
               Text(
                 'Admin Portal',
@@ -139,4 +139,5 @@ class AdminLoginScreen extends ConsumerWidget {
 
 // Re-using a simple loading provider for the UI
 final isLoadingProvider = StateProvider<bool>((ref) => false);
+
 
