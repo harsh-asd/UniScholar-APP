@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +75,7 @@ class OtrRegistrationScreen extends ConsumerWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    backgroundColor: Colors.blue.shade800,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
                   ),
                   child: isLoading
@@ -104,13 +104,13 @@ class OtrRegistrationScreen extends ConsumerWidget {
                   ),
                   child: Column(
                     children: [
-                      const Icon(Icons.face_retouching_natural, size: 64, color: Colors.blue),
+                      const Icon(Icons.face_retouching_natural, size: 64, color: Theme.of(context).colorScheme.secondary),
                       const SizedBox(height: 16),
                       Text(
                         'Ref: ${ref.watch(referenceNumberProvider)}',
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade900,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],
@@ -220,7 +220,7 @@ class OtrRegistrationScreen extends ConsumerWidget {
                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.copy, color: Colors.blue),
+                            icon: const Icon(Icons.copy, color: Theme.of(context).colorScheme.secondary),
                             tooltip: 'Copy to Clipboard',
                             onPressed: () {
                               Clipboard.setData(ClipboardData(text: otrId));
@@ -273,3 +273,4 @@ class OtrRegistrationScreen extends ConsumerWidget {
     );
   }
 }
+

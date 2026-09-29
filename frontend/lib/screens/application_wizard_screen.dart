@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ApplicationWizardScreen extends StatefulWidget {
@@ -63,7 +63,7 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            backgroundColor: Colors.blue.shade900,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             behavior: SnackBarBehavior.floating,
                             margin: const EdgeInsets.only(top: 50, left: 16, right: 16),
                             duration: const Duration(seconds: 6),
@@ -211,9 +211,9 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
           children: [
             const Row(
               children: [
-                Icon(Icons.sync, color: Colors.blue),
+                Icon(Icons.sync, color: Theme.of(context).colorScheme.secondary),
                 SizedBox(width: 8),
-                Text('Data Auto-filled from OTR', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+                Text('Data Auto-filled from OTR', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.bold)),
               ],
             ),
             const Divider(height: 24),
@@ -221,7 +221,7 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
             _buildProfileRow('Gender', 'Male'),
             _buildProfileRow('Category', 'Scheduled Tribe (ST)'),
             _buildProfileRow('Aadhaar Number', 'XXXX-XXXX-1234'),
-            _buildProfileRow('Annual Income', '₹ 2,50,000'),
+            _buildProfileRow('Annual Income', 'â‚¹ 2,50,000'),
           ],
         ),
       ),
@@ -320,3 +320,4 @@ class _ApplicationWizardScreenState extends State<ApplicationWizardScreen> {
     );
   }
 }
+

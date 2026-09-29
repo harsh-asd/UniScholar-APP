@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/auth_provider.dart';
@@ -35,13 +35,13 @@ class AdminLoginScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.admin_panel_settings, size: 64, color: Colors.blueGrey),
+              const Icon(Icons.admin_panel_settings, size: 64, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 16),
               Text(
                 'Admin Portal',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey.shade900,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -79,7 +79,7 @@ class AdminLoginScreen extends ConsumerWidget {
                 onPressed: isLoading ? null : () => _handleLogin(ref, context),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.blueGrey.shade800,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
@@ -139,3 +139,4 @@ class AdminLoginScreen extends ConsumerWidget {
 
 // Re-using a simple loading provider for the UI
 final isLoadingProvider = StateProvider<bool>((ref) => false);
+

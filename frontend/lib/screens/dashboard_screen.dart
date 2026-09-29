@@ -188,7 +188,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: CircleAvatar(backgroundColor: Colors.blue.shade50, child: Icon(icon, color: Colors.blue.shade800)),
+        leading: CircleAvatar(backgroundColor: Colors.blue.shade50, child: Icon(icon, color: Theme.of(context).colorScheme.primary)),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.check_circle, color: Colors.green),
@@ -544,4 +544,5 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     );
   }
 }
+
 
