@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
@@ -88,12 +88,12 @@ class AdminDashboardScreen extends ConsumerWidget {
             tooltip: 'Back to Welcome',
           ),
           title: Row(children: [CircleAvatar(backgroundImage: const AssetImage('assets/images/app_logo.jpg'), backgroundColor: Colors.white, radius: 16), const SizedBox(width: 12), const Text('Nodal Officer Verification Dashboard')]),
-          backgroundColor: Colors.blueGrey.shade900,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
           bottom: const TabBar(
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white60,
-            indicatorColor: Colors.tealAccent,
+            indicatorColor: Colors.white,
             tabs: [
               Tab(icon: Icon(Icons.verified_user), text: 'Manual Scrutiny Queue'),
               Tab(icon: Icon(Icons.radar), text: 'AI Outreach (UDISE+)'),

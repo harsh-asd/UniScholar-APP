@@ -74,12 +74,12 @@ class UniScholarApp extends ConsumerWidget {
       theme: ThemeData(
         // OFFICIAL NSP COLOR PALETTE
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1A334D), // NSP Navy Blue
-          primary: const Color(0xFF1A334D),
-          secondary: const Color(0xFFE75425), // NSP Saffron/Orange
+          seedColor: const Color(0xFF4A1010), // Logo Deep Maroon
+          primary: const Color(0xFF4A1010), // Logo Deep Maroon
+          secondary: const Color(0xFFB38031), // Logo Gold
           surface: Colors.white,
         ),
-        scaffoldBackgroundColor: Colors.grey.shade50,
+        scaffoldBackgroundColor: const Color(0xFFFCF9F2), // Logo Cream Background
         useMaterial3: true,
         fontFamily: 'Roboto',
         appBarTheme: const AppBarTheme(
