@@ -18,10 +18,42 @@ class PendingApplicationsNotifier extends StateNotifier<List<dynamic>> {
 
   Future<void> fetchApplications() async {
     try {
-      final response = await apiClient.get('/admin/applications/pending');
-      if (response.statusCode == 200) {
-        state = response.data['applications'] ?? [];
-      }
+      // Simulate network delay
+      await Future.delayed(const Duration(milliseconds: 800));
+      
+      // MOCK DATA for Hackathon Vercel Demo
+      state = [
+        {
+          'id': 'APP10092',
+          'student_name': 'Ramesh Kumar',
+          'status': 'PENDING',
+          'created_at': '2023-11-05T10:30:00Z',
+          'academic_details': 'B.Tech Computer Science (1st Year)',
+          'caste_certificate': 'verified',
+          'income_certificate': 'pending',
+          'ai_risk_score': 15,
+        },
+        {
+          'id': 'APP10093',
+          'student_name': 'Sunita Meena',
+          'status': 'PENDING',
+          'created_at': '2023-11-06T14:15:00Z',
+          'academic_details': 'BA History (2nd Year)',
+          'caste_certificate': 'verified',
+          'income_certificate': 'verified',
+          'ai_risk_score': 8,
+        },
+        {
+          'id': 'APP10094',
+          'student_name': 'Vikas Gond',
+          'status': 'PENDING',
+          'created_at': '2023-11-07T09:00:00Z',
+          'academic_details': 'B.Sc Physics (3rd Year)',
+          'caste_certificate': 'flagged',
+          'income_certificate': 'verified',
+          'ai_risk_score': 85,
+        }
+      ];
     } catch (e) {
       print('Error fetching applications: $e');
     }
@@ -400,24 +432,19 @@ class AdminDashboardScreen extends ConsumerWidget {
 
   Future<void> _submitVerification(BuildContext context, WidgetRef ref, String id, String action, String remarks) async {
     try {
-      final apiClient = ref.read(apiClientProvider);
-      final response = await apiClient.post(
-        '/admin/applications/$id/verify',
-        data: {
-          'action': action,
-          'remarks': remarks,
-        },
-      );
+      // MOCKED offline behavior
+      await Future.delayed(const Duration(milliseconds: 500));
 
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.data['message']), backgroundColor: Colors.green),
-        );
-        
-        // Remove from list and clear detail view
-        ref.read(pendingApplicationsProvider.notifier).removeApplication(id);
-        ref.read(selectedApplicationProvider.notifier).state = null;
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Application $action successfully (Offline Demo)'), 
+          backgroundColor: Colors.green
+        ),
+      );
+      
+      // Remove from list and clear detail view
+      ref.read(pendingApplicationsProvider.notifier).removeApplication(id);
+      ref.read(selectedApplicationProvider.notifier).state = null;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Verification Failed'), backgroundColor: Colors.red),
