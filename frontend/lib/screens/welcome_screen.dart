@@ -52,12 +52,8 @@ class WelcomeScreen extends StatelessWidget {
                         const SizedBox(height: 24),
                         ElevatedButton.icon(
                           onPressed: () async {
-                            final url = Uri.parse('/app-release.apk');
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            } else {
-                              await launchUrl(Uri.parse('https://github.com/harsh-asd/UniScholar-APP/raw/main/frontend/build/web/app-release.apk'));
-                            }
+                            final url = Uri.parse('https://unischolar-app.vercel.app/app-release.apk');
+                            await launchUrl(url, mode: LaunchMode.externalApplication);
                           },
                           icon: const Icon(Icons.android),
                           label: const Text('Download Mobile App (APK)'),
