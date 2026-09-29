@@ -266,3 +266,6 @@ class _JagoChatbotState extends State<JagoChatbot> {
       ),
     );
 }
+
+}
+
