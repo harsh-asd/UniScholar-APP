@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../widgets/goi_top_bar.dart';
 import '../widgets/jago_chatbot.dart';
 
@@ -25,7 +26,14 @@ class WelcomeScreen extends StatelessWidget {
                     const Spacer(flex: 1),
                     Column(
                       children: [
-                        Icon(Icons.school, size: 72, color: theme.colorScheme.primary),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.asset(
+                            'assets/images/app_logo.jpg',
+                            height: 120,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           'Welcome to',
@@ -39,6 +47,25 @@ class WelcomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: theme.colorScheme.onSurface,
                             letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            final url = Uri.parse('/app-release.apk');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              await launchUrl(Uri.parse('https://github.com/harsh-asd/UniScholar-APP/raw/main/frontend/build/web/app-release.apk'));
+                            }
+                          },
+                          icon: const Icon(Icons.android),
+                          label: const Text('Download Mobile App (APK)'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade600,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                       ],

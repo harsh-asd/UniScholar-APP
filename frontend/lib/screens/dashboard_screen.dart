@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../services/api_client.dart';
@@ -36,7 +36,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       child: Scaffold(
         backgroundColor: Colors.grey.shade50,
         appBar: AppBar(
-          title: Text(currentLang == 'hi' ? 'छात्र डैशबोर्ड' : 'Student Dashboard'),
+          leading: Padding(padding: const EdgeInsets.all(8.0), child: CircleAvatar(backgroundImage: const AssetImage('assets/images/app_logo.jpg'), backgroundColor: Colors.white)),
+          title: Text(currentLang == 'hi' ? 'à¤›à¤¾à¤¤à¥à¤° à¤¡à¥ˆà¤¶à¤¬à¥‹à¤°à¥à¤¡' : 'Student Dashboard'),
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: Colors.white,
           elevation: 2,
@@ -45,13 +46,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               icon: const Icon(Icons.notifications_none),
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(currentLang == 'hi' ? 'कोई नई सूचना नहीं' : 'No new notifications')),
+                  SnackBar(content: Text(currentLang == 'hi' ? 'à¤•à¥‹à¤ˆ à¤¨à¤ˆ à¤¸à¥‚à¤šà¤¨à¤¾ à¤¨à¤¹à¥€à¤‚' : 'No new notifications')),
                 );
               },
             ),
             IconButton(
               icon: const Icon(Icons.logout),
-              tooltip: currentLang == 'hi' ? 'लॉग आउट' : 'Sign Out',
+              tooltip: currentLang == 'hi' ? 'à¤²à¥‰à¤— à¤†à¤‰à¤Ÿ' : 'Sign Out',
               onPressed: () {
                 ref.read(authProvider.notifier).logout();
                 context.go('/welcome');
@@ -69,8 +70,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           backgroundColor: Colors.white,
           elevation: 8, type: BottomNavigationBarType.fixed,
           items: [
-            BottomNavigationBarItem(icon: const Icon(Icons.home), label: currentLang == 'hi' ? 'होम' : 'Home'),
-            BottomNavigationBarItem(icon: const Icon(Icons.security), label: currentLang == 'hi' ? 'डिजिलॉकर' : 'DigiLocker'),
+            BottomNavigationBarItem(icon: const Icon(Icons.home), label: currentLang == 'hi' ? 'à¤¹à¥‹à¤®' : 'Home'),
+            BottomNavigationBarItem(icon: const Icon(Icons.security), label: currentLang == 'hi' ? 'à¤¡à¤¿à¤œà¤¿à¤²à¥‰à¤•à¤°' : 'DigiLocker'),
             BottomNavigationBarItem(icon: const Icon(Icons.list_alt), label: 'Schemes'),
             BottomNavigationBarItem(icon: const Icon(Icons.account_balance_wallet), label: 'Passbook'),
             BottomNavigationBarItem(icon: const Icon(Icons.person), label: 'Profile'),
@@ -88,7 +89,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           backgroundColor: theme.colorScheme.secondary,
           foregroundColor: Colors.white,
           icon: const Icon(Icons.chat_bubble_outline),
-          label: Text(currentLang == 'hi' ? 'जागो से पूछें' : 'Ask JAGO', style: const TextStyle(fontWeight: FontWeight.bold)),
+          label: Text(currentLang == 'hi' ? 'à¤œà¤¾à¤—à¥‹ à¤¸à¥‡ à¤ªà¥‚à¤›à¥‡à¤‚' : 'Ask JAGO', style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -101,7 +102,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            currentLang == 'hi' ? 'वापसी पर स्वागत है, ${authState.fullName ?? 'छात्र'}!' : 'Welcome back, ${authState.fullName ?? 'Student'}!',
+            currentLang == 'hi' ? 'à¤µà¤¾à¤ªà¤¸à¥€ à¤ªà¤° à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆ, ${authState.fullName ?? 'à¤›à¤¾à¤¤à¥à¤°'}!' : 'Welcome back, ${authState.fullName ?? 'Student'}!',
             style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
@@ -127,7 +128,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
           ),
           
-          Text(currentLang == 'hi' ? 'सक्रिय आवेदन स्थिति' : 'Active Application Status', style: theme.textTheme.titleMedium),
+          Text(currentLang == 'hi' ? 'à¤¸à¤•à¥à¤°à¤¿à¤¯ à¤†à¤µà¥‡à¤¦à¤¨ à¤¸à¥à¤¥à¤¿à¤¤à¤¿' : 'Active Application Status', style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           _buildStatusStepper(context),
           const SizedBox(height: 12),
@@ -142,7 +143,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 );
               },
               icon: const Icon(Icons.support_agent, color: Colors.red),
-              label: Text(currentLang == 'hi' ? 'शिकायत दर्ज करें' : 'Raise a Grievance Ticket'),
+              label: Text(currentLang == 'hi' ? 'à¤¶à¤¿à¤•à¤¾à¤¯à¤¤ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚' : 'Raise a Grievance Ticket'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.red,
                 side: const BorderSide(color: Colors.red),
@@ -165,12 +166,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           children: [
             const Icon(Icons.cloud_done, color: Colors.green, size: 28),
             const SizedBox(width: 12),
-            Expanded(child: Text(currentLang == 'hi' ? 'डिजिलॉकर दस्तावेज़ वॉल्ट' : 'DigiLocker Document Vault', style: theme.textTheme.titleLarge)),
+            Expanded(child: Text(currentLang == 'hi' ? 'à¤¡à¤¿à¤œà¤¿à¤²à¥‰à¤•à¤° à¤¦à¤¸à¥à¤¤à¤¾à¤µà¥‡à¤œà¤¼ à¤µà¥‰à¤²à¥à¤Ÿ' : 'DigiLocker Document Vault', style: theme.textTheme.titleLarge)),
           ],
         ),
         const SizedBox(height: 8),
         Text(
-          currentLang == 'hi' ? 'आपके दस्तावेज़ OTR एकीकरण के माध्यम से स्वचालित रूप से सत्यापित होते हैं।' : 'Your documents are digitally fetched and verified via OTR integration, eliminating the need to upload PDFs.', 
+          currentLang == 'hi' ? 'à¤†à¤ªà¤•à¥‡ à¤¦à¤¸à¥à¤¤à¤¾à¤µà¥‡à¤œà¤¼ OTR à¤à¤•à¥€à¤•à¤°à¤£ à¤•à¥‡ à¤®à¤¾à¤§à¥à¤¯à¤® à¤¸à¥‡ à¤¸à¥à¤µà¤šà¤¾à¤²à¤¿à¤¤ à¤°à¥‚à¤ª à¤¸à¥‡ à¤¸à¤¤à¥à¤¯à¤¾à¤ªà¤¿à¤¤ à¤¹à¥‹à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤' : 'Your documents are digitally fetched and verified via OTR integration, eliminating the need to upload PDFs.', 
           style: TextStyle(color: Colors.grey.shade600)
         ),
         const SizedBox(height: 24),
@@ -231,14 +232,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const Icon(Icons.auto_awesome, color: Colors.amber, size: 24),
                     const SizedBox(width: 8),
                     Text(
-                      currentLang == 'hi' ? 'AI स्मार्ट मैच' : 'AI Smart Match', 
+                      currentLang == 'hi' ? 'AI à¤¸à¥à¤®à¤¾à¤°à¥à¤Ÿ à¤®à¥ˆà¤š' : 'AI Smart Match', 
                       style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 16)
                     ),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  currentLang == 'hi' ? 'आपकी OTR प्रोफ़ाइल के आधार पर, आप इसके लिए 98% पात्र हैं:' : 'Based on your OTR Profile, you are a 98% match for:',
+                  currentLang == 'hi' ? 'à¤†à¤ªà¤•à¥€ OTR à¤ªà¥à¤°à¥‹à¤«à¤¼à¤¾à¤‡à¤² à¤•à¥‡ à¤†à¤§à¤¾à¤° à¤ªà¤°, à¤†à¤ª à¤‡à¤¸à¤•à¥‡ à¤²à¤¿à¤ 98% à¤ªà¤¾à¤¤à¥à¤° à¤¹à¥ˆà¤‚:' : 'Based on your OTR Profile, you are a 98% match for:',
                   style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 8),
@@ -256,7 +257,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       foregroundColor: Colors.purple.shade900,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
-                    child: Text(currentLang == 'hi' ? '1-क्लिक अप्लाई' : '1-Click Apply (Auto-Fill)'),
+                    child: Text(currentLang == 'hi' ? '1-à¤•à¥à¤²à¤¿à¤• à¤…à¤ªà¥à¤²à¤¾à¤ˆ' : '1-Click Apply (Auto-Fill)'),
                   ),
                 )
               ],
@@ -267,7 +268,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         if (index == 1) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Text(currentLang == 'hi' ? 'अन्य उपलब्ध योजनाएं' : 'Other Available Schemes', style: theme.textTheme.titleLarge),
+            child: Text(currentLang == 'hi' ? 'à¤…à¤¨à¥à¤¯ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¯à¥‹à¤œà¤¨à¤¾à¤à¤‚' : 'Other Available Schemes', style: theme.textTheme.titleLarge),
           );
         }
 
@@ -277,10 +278,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           child: ListTile(
             contentPadding: const EdgeInsets.all(16),
             title: Text(schemeName, style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(currentLang == 'hi' ? 'पात्रता की जाँच की जा रही है...' : 'Checking eligibility against OTR...'),
+            subtitle: Text(currentLang == 'hi' ? 'à¤ªà¤¾à¤¤à¥à¤°à¤¤à¤¾ à¤•à¥€ à¤œà¤¾à¤à¤š à¤•à¥€ à¤œà¤¾ à¤°à¤¹à¥€ à¤¹à¥ˆ...' : 'Checking eligibility against OTR...'),
             trailing: OutlinedButton(
               onPressed: () => context.push('/apply', extra: schemeName),
-              child: Text(currentLang == 'hi' ? 'विवरण' : 'Details'),
+              child: Text(currentLang == 'hi' ? 'à¤µà¤¿à¤µà¤°à¤£' : 'Details'),
             ),
           ),
         );
@@ -392,7 +393,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               children: [
                 _buildDbtRow('PFMS Token:', 'TXN-847291-MOTA', true),
                 const Divider(),
-                _buildDbtRow('Amount Sanctioned:', '₹ 45,000.00', true),
+                _buildDbtRow('Amount Sanctioned:', 'â‚¹ 45,000.00', true),
                 const Divider(),
                 _buildDbtRow('Credit Status:', 'SUCCESS (Credited on 26-Sep-2026)', true),
                 const Divider(),
@@ -429,7 +430,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Text(currentLang == 'hi' ? 'DBT पासबुक' : 'DBT Digital Passbook', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+        Text(currentLang == 'hi' ? 'DBT à¤ªà¤¾à¤¸à¤¬à¥à¤•' : 'DBT Digital Passbook', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Text('Track your Public Financial Management System (PFMS) credits', style: TextStyle(color: Colors.grey.shade600)),
         const SizedBox(height: 24),
@@ -446,9 +447,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         const SizedBox(height: 24),
         const Text('Transaction History', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 12),
-        _buildTransactionRow('NFST Fellowship (AY 2026-27)', '26 Sep 2026', '₹ 45,000', true),
-        _buildTransactionRow('Pre-Matric Scholarship (AY 2025-26)', '14 Nov 2025', '₹ 15,000', true),
-        _buildTransactionRow('Book Grant Allowance', '10 Aug 2025', '₹ 5,000', true),
+        _buildTransactionRow('NFST Fellowship (AY 2026-27)', '26 Sep 2026', 'â‚¹ 45,000', true),
+        _buildTransactionRow('Pre-Matric Scholarship (AY 2025-26)', '14 Nov 2025', 'â‚¹ 15,000', true),
+        _buildTransactionRow('Book Grant Allowance', '10 Aug 2025', 'â‚¹ 5,000', true),
       ],
     );
   }
@@ -504,7 +505,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         _buildProfileField('Aadhaar Number', 'XXXX-XXXX-1234'),
         _buildProfileField('Gender', 'Male'),
         _buildProfileField('Category', 'Scheduled Tribe (ST)'),
-        _buildProfileField('Annual Family Income', '₹ 2,50,000'),
+        _buildProfileField('Annual Family Income', 'â‚¹ 2,50,000'),
         const SizedBox(height: 24),
         _buildProfileSectionTitle('Preferences & Support'),
         ListTile(
@@ -543,3 +544,4 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     );
   }
 }
+
