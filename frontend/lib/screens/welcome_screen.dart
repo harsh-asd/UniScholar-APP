@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                         const SizedBox(height: 24),
                         ElevatedButton.icon(
                           onPressed: () async {
-                            final url = Uri.parse('https://unischolar-app.vercel.app/app-release.apk');
+                            final url = Uri.parse(Uri.base.origin + '/app-release.apk');
                             await launchUrl(url, mode: LaunchMode.externalApplication);
                           },
                           icon: const Icon(Icons.android),
@@ -182,4 +182,5 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
+
 
